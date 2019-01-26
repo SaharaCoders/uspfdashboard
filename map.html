@@ -14,10 +14,18 @@
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
   <!-- CSS Files -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
   <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="assets/css/paper-dashboard.css?v=2.0.0" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="assets/demo/demo.css" rel="stylesheet" />
+    <style>
+    #map {
+      height: 100%%;
+      width: 100%%;
+      margin: 0 auto;
+    }
+  </style>
 </head>
 
 <body class="">
@@ -138,6 +146,7 @@
   <script src="assets/js/core/jquery.min.js"></script>
   <script src="assets/js/core/popper.min.js"></script>
   <script src="assets/js/core/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
   <script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
   <!--  Google Maps Plugin    -->
   <script src="https://maps.googleapis.com/maps/api/js?key="AIzaSyBH3yB8Vtmpa0ueNf_RPt56AdQrsrkwsLU"></script>
@@ -152,6 +161,32 @@
   <script>
     $(document).ready(function() {
       // demo.initGoogleMaps();
+    });
+  </script>
+  <script type="text/javascript">
+    // instantiate map
+    const mymap = L.map('map', {
+      dragging: false,
+      zoomControl: false,
+      minZoom: 11,
+      maxZoom: 11,
+    })
+      .setView([40.7125, -74], 11);
+    // add carto light basemap tiles
+    L.tileLayer('//{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+      maxZoom: 18, attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attribution">CARTO</a>'
+    }).addTo(mymap);
+    // add a marker
+    const marker = L.marker([40.76704, -73.97967]).addTo(mymap);
+    marker.bindPopup("Here is a marker.  Click to link to another site");
+    marker.on('mouseover', function (e) {
+        this.openPopup();
+    });
+    marker.on('mouseout', function (e) {
+        this.closePopup();
+    });
+    marker.on('click', function() {
+      window.open('https://planninglabs.nyc', '_blank')
     });
   </script>
 </body>
